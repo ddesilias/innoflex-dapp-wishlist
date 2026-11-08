@@ -6,7 +6,7 @@ import {
   RainbowKitProvider,
   darkTheme
 } from '@rainbow-me/rainbowkit';
-import { WagmiProvider } from 'wagmi';
+import { WagmiProvider, createConfig, http } from 'wagmi';
 import {
   hardhat
 } from 'wagmi/chains';
@@ -15,11 +15,17 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 
-const config = getDefaultConfig({
+const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID;
+const config = projectId ? getDefaultConfig({
     appName: 'My RainbowKit App',
-    projectId: '',
+    projectId,
     chains: [hardhat],
-    ssr: true, // If your dApp uses server side rendering (SSR)
+    ssr: true,
+}) : createConfig({
+    chains: [hardhat],
+    connectors: [],
+    transports: { [hardhat.id]: http() },
+    ssr: true,
 });
 
 const queryClient = new QueryClient();

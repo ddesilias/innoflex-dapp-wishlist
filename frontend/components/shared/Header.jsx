@@ -9,7 +9,7 @@ const Header = () => {
                 <Link href="/"><Image src="logo.svg" width="150" height="30" /></Link>
             </div>
             <div>
-                <ConnectButton showBalance={false} />
+                {process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ? <ConnectButton showBalance={false} /> : <button type="button" disabled>Connexion indisponible</button>}
             </div>
         </nav>
     )
